@@ -23,7 +23,8 @@ class CustomColors {
 
   static const Color black = Color(0xff20262C);
   static const Color lightblack = Color(0xff5F5F60);
-}
+  static const Color green = Color(0xff02c58d);
+  static const Color yellow = Color(0xfffcbe2d);
+  
 
-const kPrimaryColor = Color(0xFF6F35A5);
-const kPrimaryLightColor = Color(0xFFF1E6FF);
+}
