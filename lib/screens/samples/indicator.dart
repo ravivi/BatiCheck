@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Indicator extends StatelessWidget {
   final Color color;
@@ -18,7 +19,11 @@ class Indicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        ScreenUtil.init(context,
+        width: 1280.0, height: 844.0, allowFontScaling: false);
     return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           width: size,
@@ -33,7 +38,7 @@ class Indicator extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+          style: TextStyle(fontSize: ScreenUtil().setSp(16), fontWeight: FontWeight.bold, color: textColor),
         )
       ],
     );

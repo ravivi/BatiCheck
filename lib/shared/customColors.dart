@@ -12,7 +12,7 @@ class CustomColors {
   
 
   static const Color orange = Color(0xffE65829);
-  static const Color red = Color(0xffF72804);
+  static const Color red = Color(0xfffc5454);
 
   static const Color lightGrey = Color(0xffE1E2E4);
   static const Color grey = Color(0xffA1A3A6);
@@ -28,3 +28,26 @@ class CustomColors {
   
 
 }
+
+final kHintTextStyle = TextStyle(
+  color: Colors.white54,
+  fontFamily: 'OpenSans',
+);
+
+final kLabelStyle = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'OpenSans',
+);
+
+final kBoxDecorationStyle = BoxDecoration(
+  color: Color(0xFF6CA8F1),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);
