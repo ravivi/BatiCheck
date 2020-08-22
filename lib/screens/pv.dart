@@ -1,8 +1,148 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import '../shared/customColors.dart';
 
-class PV extends StatelessWidget {
+class PV extends StatefulWidget {
+  @override
+  _PVState createState() => _PVState();
+}
+
+class _PVState extends State<PV> {
+  File _imageFile;
+  File _imageFile2;
+  File _imageFile3;
+  void _getImage(BuildContext context, ImageSource source) {
+    ImagePicker.pickImage(source: source, maxWidth: 400.0).then((File image) {
+      setState(() {
+        _imageFile = image;
+      });
+      Navigator.pop(context);
+    });
+  }
+
+  void _getImage2(BuildContext context, ImageSource source) {
+    ImagePicker.pickImage(source: source, maxWidth: 400.0).then((File image) {
+      setState(() {
+        _imageFile2 = image;
+      });
+      Navigator.pop(context);
+    });
+  }
+
+  void _getImage3(BuildContext context, ImageSource source) {
+    ImagePicker.pickImage(source: source, maxWidth: 400.0).then((File image) {
+      setState(() {
+        _imageFile3 = image;
+      });
+      Navigator.pop(context);
+    });
+  }
+
+  void _openImagePicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 150.0,
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: [
+              Text(
+                'Prendre une photo',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Utilisez la caméra'),
+                onPressed: () {
+                  _getImage(context, ImageSource.camera);
+                },
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Image depuis la galerie'),
+                onPressed: () {
+                  _getImage(context, ImageSource.gallery);
+                },
+              )
+            ]),
+          );
+        });
+  }
+
+  void _openImagePicker2(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 150.0,
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: [
+              Text(
+                'Prendre une photo',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Utilisez la caméra'),
+                onPressed: () {
+                  _getImage2(context, ImageSource.camera);
+                },
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Image depuis la galerie'),
+                onPressed: () {
+                  _getImage2(context, ImageSource.gallery);
+                },
+              )
+            ]),
+          );
+        });
+  }
+
+  void _openImagePicker3(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 150.0,
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: [
+              Text(
+                'Prendre une photo',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Utilisez la caméra'),
+                onPressed: () {
+                  _getImage3(context, ImageSource.camera);
+                },
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                child: Text('Image depuis la galerie'),
+                onPressed: () {
+                  _getImage3(context, ImageSource.gallery);
+                },
+              )
+            ]),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -83,7 +223,6 @@ class PV extends StatelessWidget {
                   SizedBox(
                     height: ScreenUtil().setHeight(30),
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -100,84 +239,152 @@ class PV extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Container(
-                              alignment: Alignment.center,
-                              height: 100.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6.0,
-                                    offset: Offset(0, 2),
+                            _imageFile == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.photo_camera,
+                                        color: CustomColors.littleBlue,
+                                        size: ScreenUtil().setSp(30),
+                                      ),
+                                      onPressed: () {
+                                        _openImagePicker(context);
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        image: FileImage(_imageFile),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.photo_camera,
-                                  color: CustomColors.littleBlue,
-                                  size: ScreenUtil().setSp(30),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: 100.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6.0,
-                                    offset: Offset(0, 2),
+                            _imageFile2 == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.photo_camera,
+                                        color: CustomColors.littleBlue,
+                                        size: ScreenUtil().setSp(30),
+                                      ),
+                                      onPressed: () {
+                                        _openImagePicker2(context);
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        image: FileImage(_imageFile2),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.photo_camera,
-                                  color: CustomColors.littleBlue,
-                                  size: ScreenUtil().setSp(30),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: 100.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 6.0,
-                                    offset: Offset(0, 2),
+                            _imageFile3 == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.photo_camera,
+                                        color: CustomColors.littleBlue,
+                                        size: ScreenUtil().setSp(30),
+                                      ),
+                                      onPressed: () {
+                                        _openImagePicker3(context);
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    height: 100.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        image: FileImage(_imageFile3),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 6.0,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.photo_camera,
-                                  color: CustomColors.littleBlue,
-                                  size: ScreenUtil().setSp(30),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
-
                   SizedBox(
                     height: ScreenUtil().setHeight(30),
                   ),
